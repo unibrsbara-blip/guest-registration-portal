@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Register for Access</title>
+  <meta charset="UTF-8" />
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      max-width: 500px;
+      margin: 50px auto;
+    }
+    label {
+      display: block;
+      margin-top: 15px;
+    }
+    input {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px;
+      width: 100%;
+    }
+    .message {
+      margin-top: 20px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+
+<body>
+  <h2>Request Access</h2>
+
+  <form id="registrationForm">
+    <label>Email address</label>
+    <input type="email" id="email" required />
+
+    <label>First name</label>
+    <input type="text" id="firstName" required />
+
+    <label>Last name</label>
+    <input type="text" id="lastName" required />
+
+    <button type="submit">Register</button>
+  </form>
+
+  <div class="message" id="message"></div>
+
+  <script>
+    document.getElementById("registrationForm").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const response = await fetch("guest-registration-gedefjhwhhdubvfy.australiaeast-01.azurewebsites.net", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email: document.getElementById("email").value,
+          firstName: document.getElementById("firstName").value,
+          lastName: document.getElementById("lastName").value
+        })
+      });
+
+      const message = document.getElementById("message");
+
+      if (response.ok) {
+        message.textContent = "✅ Registration successful. You can now sign in.";
+        message.style.color = "green";
+      } else {
+        message.textContent = "❌ Registration failed. Please try again.";
+        message.style.color = "red";
+      }
+    });
+  </script>
+</body>
+</html>
